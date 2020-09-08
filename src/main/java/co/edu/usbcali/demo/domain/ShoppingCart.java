@@ -33,18 +33,25 @@ public class ShoppingCart implements java.io.Serializable {
 	private Integer items;
 
 	private Long total;
+	
+	private String enable;
+	
 	private List<ShoppingProduct> shoppingProducts = new ArrayList<ShoppingProduct>(0);
 
 	public ShoppingCart() {
 	}
 
-	public ShoppingCart(Integer carId, Customer customer, Integer items, PaymentMethod paymentMethod,
-			List<ShoppingProduct> shoppingProducts, Long total) {
+
+
+	public ShoppingCart(Integer carId, Customer customer, PaymentMethod paymentMethod, Integer items, Long total,
+			String enable, List<ShoppingProduct> shoppingProducts) {
+		super();
 		this.carId = carId;
 		this.customer = customer;
 		this.paymentMethod = paymentMethod;
 		this.items = items;
 		this.total = total;
+		this.enable = enable;
 		this.shoppingProducts = shoppingProducts;
 	}
 
@@ -57,6 +64,15 @@ public class ShoppingCart implements java.io.Serializable {
 
 	public void setCarId(Integer carId) {
 		this.carId = carId;
+	}
+	
+	@Column(name = "enable", nullable = false)
+	public String getEnable() {
+		return this.enable;
+	}
+
+	public void setEnable(String enable) {
+		this.enable = enable;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -105,4 +121,6 @@ public class ShoppingCart implements java.io.Serializable {
 	public void setShoppingProducts(List<ShoppingProduct> shoppingProducts) {
 		this.shoppingProducts = shoppingProducts;
 	}
+	
+	
 }
