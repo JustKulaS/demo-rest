@@ -29,7 +29,7 @@ public class Product implements java.io.Serializable {
 	
 	private String name;
 	
-	private int price;
+	private Integer price;
 	
 	private List<ShoppingProduct> shoppingProducts = new ArrayList<ShoppingProduct>(0);
 
@@ -94,11 +94,11 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Column(name = "price", nullable = false)
-	public int getPrice() {
+	public Integer getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 
