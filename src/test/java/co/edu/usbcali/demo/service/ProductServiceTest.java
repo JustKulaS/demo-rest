@@ -51,8 +51,7 @@ class ProductServiceTest {
 	@Order(2)
 	void findByID() throws Exception {
 		log.info("findbyID");
-		Optional<Product> productOptional=productService.findById(proId);
-		
+		Optional<Product> productOptional=productService.findById(proId);	
 		assertTrue(productOptional.isPresent(), "El producto no existe");
 				
 	}
@@ -66,9 +65,7 @@ class ProductServiceTest {
 		assertTrue(productOptional.isPresent(), "El producto no existe");
 		
 		Product product=productOptional.get();
-		
 		product.setEnable("Y");
-		
 		productService.update(product);
 	}
 	
@@ -77,12 +74,15 @@ class ProductServiceTest {
 	void delete() throws Exception {
 		log.info("delete");
 		Optional<Product> productOptional=productService.findById(proId);
-		
 		assertTrue(productOptional.isPresent(), "El producto no existe");
-		
 		Product product=productOptional.get();
-		
 		productService.delete(product);
+	}
+	
+	@Test
+	@Order(5)
+	void count() throws Exception {
+		
 	}
 
 

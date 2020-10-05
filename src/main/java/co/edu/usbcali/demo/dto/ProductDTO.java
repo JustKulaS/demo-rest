@@ -3,15 +3,43 @@ package co.edu.usbcali.demo.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import co.edu.usbcali.demo.domain.ShoppingProduct;
 
 public class ProductDTO {
 
+	@NotNull
+	@Size(min = 3, max = 255)
+	@NotEmpty
 	private String proId;
+	
+	@NotNull
+	@Size(min = 3, max = 255)
+	@NotEmpty
 	private String detail;
+	
+	@NotNull
+	@Size(min = 1, max = 1)
+	@NotEmpty
 	private String enable;
+	
+	@NotNull
+	@Size(min = 3, max = 255)
+	@NotEmpty
 	private String image;
+	
+	@NotNull
+	@Size(min = 3, max = 255)
+	@NotEmpty
 	private String name;
+	
+	@NotNull
+	@Size(min = 3, max = 255)
+	@NotEmpty
 	private int price;	
 	//private List<ShoppingProduct> shoppingProducts = new ArrayList<ShoppingProduct>(0);
 	

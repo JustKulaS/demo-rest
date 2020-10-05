@@ -41,7 +41,7 @@ class CustomerServiceTest {
 		customer.setAddress("lo que sea 123");
 		customer.setEmail(email);
 		customer.setEnable("Y");
-		customer.setName("gian");
+		customer.setName("giancarlo");
 		customer.setPhone("1213 131 41");
 		customer.setToken("NKASJDKAD34353KJ");
 		

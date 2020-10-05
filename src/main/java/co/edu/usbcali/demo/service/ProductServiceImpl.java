@@ -2,6 +2,11 @@ package co.edu.usbcali.demo.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -9,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.edu.usbcali.demo.domain.Customer;
 import co.edu.usbcali.demo.domain.Product;
 import co.edu.usbcali.demo.repository.ProductRepository;
 
@@ -19,6 +25,10 @@ public class ProductServiceImpl implements ProductService{
 
 	@Autowired
 	ProductRepository productRepository;
+	
+	@Autowired
+	Validator validator;
+
 
 	@Override
 	@Transactional(readOnly = true)
@@ -99,25 +109,12 @@ public class ProductServiceImpl implements ProductService{
 		if(entity==null) {
 			throw new Exception("EL customer es nulo");
 		}
-		if(entity.getProId()==null || entity.getProId().isBlank()==true) {
-			throw new Exception("EL ID del producto es obligatorio");
-		}
-		if(entity.getPrice()==null || entity.getPrice() < 0) {
-			throw new Exception("EL precio es obligatorio");
-		}
-		if(entity.getEnable()==null || entity.getEnable().isBlank()==true) {
-			throw new Exception("EL enable es obligatorio");
-		}
-		if(entity.getName()==null || entity.getName().isBlank()==true) {
-			throw new Exception("EL nombre es obligatorio");
-		}
-		if(entity.getImage()==null || entity.getImage().isBlank()==true) {
-			throw new Exception("la imagen es obligatorio");
-		}
-		if(entity.getDetail()==null || entity.getDetail().isBlank()==true) {
-			throw new Exception("EL detalle es obligatorio");
-		}
+		Set<ConstraintViolation<Product>> constraintViolation= validator.validate(entity);
 		
+		if(constraintViolation.isEmpty()==false) {
+			throw new ConstraintViolationException(constraintViolation);
+		}
+
 	}
 
 
