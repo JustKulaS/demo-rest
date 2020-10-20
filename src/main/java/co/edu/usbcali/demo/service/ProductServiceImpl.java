@@ -100,7 +100,14 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public void deleteById(String id) throws Exception {
-		// TODO Auto-generated method stub
+		if(id==null || id.isBlank()==true) {
+			throw new Exception("el proId es obligatorio");
+		}
+		if(productRepository.existsById(id)) {
+			delete(productRepository.findById(id).get());
+		}else {
+			throw new Exception("El product con id:" + id+ " no existe");
+		}
 		
 	}
 

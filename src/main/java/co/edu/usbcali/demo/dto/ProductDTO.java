@@ -40,7 +40,7 @@ public class ProductDTO {
 	@NotNull
 	@Size(min = 3, max = 255)
 	@NotEmpty
-	private int price;	
+	private Integer price;	
 	//private List<ShoppingProduct> shoppingProducts = new ArrayList<ShoppingProduct>(0);
 	
 	

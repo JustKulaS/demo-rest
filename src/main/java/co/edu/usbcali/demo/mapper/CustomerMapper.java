@@ -11,7 +11,7 @@ import co.edu.usbcali.demo.dto.CustomerDTO;
 public interface CustomerMapper {
 	public CustomerDTO toCustomerDTO(Customer customer);
 	
-	public Customer toCustomer(CustomerDTO cuustomerDTO);
+	public Customer toCustomer(CustomerDTO customerDTO);
 	
 	public List<CustomerDTO> toCustomersDTO(List<Customer> customers);
 	

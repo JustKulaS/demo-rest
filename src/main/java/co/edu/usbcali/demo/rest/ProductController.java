@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,7 @@ import co.edu.usbcali.demo.service.ProductService;
 
 @RestController
 @RequestMapping("/api/product")
-
+@CrossOrigin("*")
 public class ProductController {
 
 	private final static Logger log = LoggerFactory.getLogger(ProductController.class);
@@ -74,4 +76,13 @@ public class ProductController {
 		ProductDTO productDTO = productMapper.toProductDTO(product);
 		return ResponseEntity.ok().body(productDTO);
 	}
+	
+	@DeleteMapping("/delete/{proId}")
+	public ResponseEntity<?> delete(@PathVariable("proId") String proId) throws Exception {
+		
+		productService.deleteById(proId);
+		
+		return ResponseEntity.ok().build();			
+	}
+	
 }
