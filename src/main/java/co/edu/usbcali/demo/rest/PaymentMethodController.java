@@ -64,7 +64,7 @@ public class PaymentMethodController {
 
 	}
 
-	@GetMapping("/findById/{proId}")
+	@GetMapping("/findById/{payId}")
 	public ResponseEntity<?> findById(@PathVariable("payId") Integer payId) throws Exception {
 
 		Optional<PaymentMethod> paymentMethodOptional = paymentMethodService.findById(payId);
@@ -76,7 +76,7 @@ public class PaymentMethodController {
 		return ResponseEntity.ok().body(paymentMethodDTO);
 	}
 	
-	@DeleteMapping("/delete/{proId}")
+	@DeleteMapping("/delete/{payId}")
 	public ResponseEntity<?> delete(@PathVariable("payId") Integer payId) throws Exception {
 		
 		paymentMethodService.deleteById(payId);
