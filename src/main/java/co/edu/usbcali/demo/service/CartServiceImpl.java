@@ -56,63 +56,68 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	@Transactional(readOnly = false,propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	public ShoppingProduct addProduct(Integer carId, String proId, Integer quantity) throws Exception {
 		
-		ShoppingCart shoppingCart=null;
-		Product product=null;
-		Long totalShoppingProduct=0L;
-		Long totalShoppingCart=0L;
-		Integer items = 0;
+		ShoppingCart shoppingCart = null;
+		Product product = null;
+		Long total = 0L;
+		Long totalCart = 0L;
 		
-		if(carId==null || carId<=0) {
+		if(carId == null || carId < 0) {
 			throw new Exception("El carId es nulo o menor a cero");
 		}
-		
-		if(proId==null || proId.isBlank()==true) {
-			throw new Exception("El proId es nulo o menor a esta en blanco");
+		if(proId == null || proId.isBlank()) {
+			throw new Exception("el proId es nulo o vacio");
+		}
+		if(quantity == null || quantity < 0) {
+			throw new Exception("La cantidad es nulo o menor a cero");
 		}
 		
-		if(quantity==null || quantity<=0) {
-			throw new Exception("El quantity es nulo o menor a cero");
+		if(shoppingCartService.findById(carId).isPresent() == false) {
+			throw new Exception("No existe el carId: "+carId);
 		}
 		
-		if(shoppingCartService.findById(carId).isPresent()==false) {
-			
+		shoppingCart = shoppingCartService.findById(carId).get();
+		
+		if(shoppingCart.getEnable().equals("N")) {
+			throw new Exception("ShoppingCart esta inhabilitado");
 		}
 		
-		shoppingCart=shoppingCartService.findById(carId).get();
-		
-		if(shoppingCart.getEnable().equals("N")==true) {
-			throw new Exception("El shoppingCart esta inhabilitado");
-		}
-		
-		if(productService.findById(proId).isPresent()==false) {
+		if(productService.findById(proId).isPresent() == false) {
 			throw new Exception("El product no existe");
 		}
 		
-		product=productService.findById(proId).get();
-		
-		if(product.getEnable().equals("N")==true) {
-			throw new Exception("El product esta inhabilitado");
+		product = productService.findById(proId).get();
+		if(product.getEnable().equals("N")) {
+			throw new Exception("El producto esta inhabilitado");
 		}
 		
-		ShoppingProduct shoppingProduct=new ShoppingProduct();
-		shoppingProduct.setProduct(product);
-		shoppingProduct.setQuantity(quantity);
-		shoppingProduct.setShoppingCart(shoppingCart);
-		shoppingProduct.setShprId(0);
-		totalShoppingProduct=Long.valueOf(product.getPrice()*quantity);
-		shoppingProduct.setTotal(totalShoppingProduct);
+		total = Long.valueOf(product.getPrice() * quantity);
 		
-		shoppingProduct=shoppingProductService.save(shoppingProduct);
+		ShoppingProduct shoppingProduct = new ShoppingProduct();
 		
-		totalShoppingCart=shoppingProductService.totalShoppingProductByShoppingCart(carId);
+		// Si el product ya existe en el cart
+		// ---> No se crea uno nuevo, se aumenta la cantidad
+		if(shoppingProductService.findShoppingProductProId(carId, proId).isEmpty()) {
+			shoppingProduct.setProduct(product);
+			shoppingProduct.setQuantity(quantity);
+			shoppingProduct.setShoppingCart(shoppingCart);
+			shoppingProduct.setShprId(0);
+			shoppingProduct.setTotal(total);
+		} else {
+			shoppingProduct = shoppingProductService.findShoppingProductProId(carId, proId).get(0);
+			shoppingProduct.setQuantity(shoppingProduct.getQuantity() + quantity);
+			shoppingProduct.setTotal(shoppingProduct.getTotal() + total);
+		}		
 		
-		shoppingCart.setTotal(totalShoppingCart);
-		shoppingCart.setItems(shoppingCart.getItems() + 1);
+		shoppingProduct = shoppingProductService.save(shoppingProduct);
+		
+		totalCart = shoppingProductService.totalShoppingProductByShoppingCart(carId);
+		
+		shoppingCart.setTotal(totalCart);
+		shoppingCart.setItems(shoppingCart.getItems() + quantity);
 		shoppingCartService.update(shoppingCart);
-		
 		
 		return shoppingProduct;
 	}
