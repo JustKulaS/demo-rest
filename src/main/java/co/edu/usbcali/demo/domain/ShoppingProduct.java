@@ -10,10 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- * @author Zathura Code Generator http://zathuracode.org/ www.zathuracode.org
- *
- */
+
 @Entity
 @Table(name = "shopping_product", schema = "public")
 public class ShoppingProduct implements java.io.Serializable {
@@ -88,4 +85,5 @@ public class ShoppingProduct implements java.io.Serializable {
 	public void setTotal(Long total) {
 		this.total = total;
 	}
+
 }

@@ -41,10 +41,9 @@ public class ShoppingCart implements java.io.Serializable {
 	public ShoppingCart() {
 	}
 
+	
 
-
-	public ShoppingCart(Integer carId, Customer customer, PaymentMethod paymentMethod, Integer items, Long total,
-			String enable, List<ShoppingProduct> shoppingProducts) {
+	public ShoppingCart(Integer carId, Customer customer, PaymentMethod paymentMethod, Integer items, Long total,String enable, List<ShoppingProduct> shoppingProducts) {
 		super();
 		this.carId = carId;
 		this.customer = customer;
@@ -55,8 +54,10 @@ public class ShoppingCart implements java.io.Serializable {
 		this.shoppingProducts = shoppingProducts;
 	}
 
+
+
 	@Id
-	@Column(name = "car_id", unique = true, nullable = false)
+	@Column(name = "car_id", unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getCarId() {
 		return this.carId;
@@ -121,6 +122,5 @@ public class ShoppingCart implements java.io.Serializable {
 	public void setShoppingProducts(List<ShoppingProduct> shoppingProducts) {
 		this.shoppingProducts = shoppingProducts;
 	}
-	
-	
 }
+
