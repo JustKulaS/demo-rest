@@ -39,6 +39,11 @@ public class CustomerDTO {
 	@NotEmpty
 	private String token;
 	
+	@NotNull
+	@Size(min = 1, max = 1)
+	@NotEmpty
+	private String rol;
+	
 	public CustomerDTO() {
 		super();
 	}

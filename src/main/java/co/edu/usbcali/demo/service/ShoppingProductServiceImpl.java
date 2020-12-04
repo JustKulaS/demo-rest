@@ -67,9 +67,7 @@ public class ShoppingProductServiceImpl implements ShoppingProductService {
 
         validate(entity);
 
-        if (shoppingProductRepository.existsById(entity.getShprId())) {
-        	throw new Exception("El ShoppingProduct con id:"+entity.getShprId()+" Ya existe");
-        }
+
 
         return shoppingProductRepository.save(entity);
     }
